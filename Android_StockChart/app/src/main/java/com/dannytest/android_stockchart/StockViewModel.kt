@@ -1,13 +1,14 @@
 package com.dannytest.android_stockchart
 
+import RiverData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 
 class StockViewModel : ViewModel() {
     // 定義 LiveData 來存儲 API 回傳的資料
-    private val _petsItemList = MutableLiveData<List<stockData.StockData>>()
-    val petsItemList: LiveData<List<stockData.StockData>>
+    private val _petsItemList = MutableLiveData<List<RiverData>>()
+    val petsItemList: LiveData<List<RiverData>>
         get() = _petsItemList
 
     // 定義 LiveData 來存儲錯誤訊息
@@ -30,8 +31,5 @@ class StockViewModel : ViewModel() {
             }
         }
     }
-
-
-
 
 }

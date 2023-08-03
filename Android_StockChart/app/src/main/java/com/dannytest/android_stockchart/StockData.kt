@@ -1,70 +1,44 @@
-package com.dannytest.android_stockchart
+import com.google.gson.annotations.SerializedName
 
-import kotlinx.serialization.SerialName
-import java.io.Serializable
+data class ApiResponse(
+    @SerializedName("data")
+    val stockDataList: List<StockData>
+)
 
-data class stockData(
-    var data: List<StockData>?
-) {
-    data class StockData(
-        val sign: String,
-        val name: String,
-        val peb: List<String>,
-        val ctn: List<String>,
-        val rivermap: List<RiverMapData>,
-        val cpe: String,
-        val cnr: String,
-        val mpe: String,
-        val mpn: String,
-        val rse: String,
-        val pra: String,
-        val aer: String,
-        val anr: String,
-        val per: String
-    ): Serializable
+data class StockData(
+    @SerializedName("股票代號")
+    val stockId: String,
+    @SerializedName("股票名稱")
+    val stockName: String,
+    @SerializedName("本益比基準")
+    val peRatio: List<String>,
+    @SerializedName("本淨比基準")
+    val pbRatio: List<String>,
+    @SerializedName("河流圖資料")
+    val riverDataList: List<RiverData>  // 將河流圖資料改為 RiverData 的 List
+)
 
-    data class RiverMapData(
-        val ym: String,
-        val macp: String,
-        @SerialName("近四季EPS")
-        val feps: String,
-        val pefm: String,
-        val pspb: List<String>,
-        @SerialName("近一季BPS")
-        val lqb: String,
-        val mqnr: String,
-        val psb: List<String>,
-        val aper: String,
-        val avern: String,
-        val ginthree: String? = null
-    ): Serializable
-}
-
-//DataTwo
-//股票代號-sign
-//股票名稱 -name
-//本益比基準 - peb
-//本淨比基準 - ctn
-//河流圖資料 -rivermap
-//目前本益比 -cpe
-//目前本淨比 -cnr
-//同業本益比中位數 - mpe
-//同業本淨比中位數 - mpn
-//本益比股價評估 - rse
-//本淨比股價評估 - pra
-//平均本益比 - aer
-//平均本淨比 -anr
-//本益成長比 -per
-
-//DataThree
-// 年月 - ym
-//月平均收盤價 - macp
-// 近四季Eps - feps
-//月近四季本益比 -pefm
-// 本益比股價基準 -pspb
-//近一季Bps - lqb
-//月近一季本淨比 - mqnr
-//本淨比股價基準 - psb
-//平均本益比 -aper
-//平均本淨比 - avern
-// 近3年年複合成長 - ginthree
+data class RiverData(
+    @SerializedName("年月")
+    val yearMonth: String,
+    @SerializedName("月平均收盤價")
+    val monthAvgClosingPrice: String,
+    @SerializedName("近四季EPS")
+    val recentFourSeasonsEPS: String,
+    @SerializedName("月近四季本益比")
+    val monthRecentFourSeasonsPERatio: String,
+    @SerializedName("本益比股價基準")
+    val peRatioPriceBase: List<String>,
+    @SerializedName("近一季BPS")
+    val recentOneSeasonBPS: String,
+    @SerializedName("月近一季本淨比")
+    val monthRecentOneSeasonPBRatio: String,
+    @SerializedName("本淨比股價基準")
+    val pbRatioPriceBase: List<String>,
+    @SerializedName("平均本益比")
+    val avgPERatio: String,
+    @SerializedName("平均本淨比")
+    val avgPBRatio: String,
+    @SerializedName("近3年年複合成長")
+    val recentThreeYearsCompoundedGrowth: String
+)

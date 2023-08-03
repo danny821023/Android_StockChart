@@ -1,19 +1,24 @@
 package com.dannytest.android_stockchart
 
+import ApiResponse
+import RiverData
 import android.util.Log
 import com.google.gson.Gson
+import com.google.gson.reflect.TypeToken
 import okhttp3.Call
 import okhttp3.Callback
 import okhttp3.OkHttpClient
 import okhttp3.Request
 import okhttp3.Response
 import java.io.IOException
+import java.util.*
+import kotlin.math.log
 
 object ApiManager {
 
     private val client = OkHttpClient()
 
-    fun fetchDataFromApi(callback: (List<stockData.StockData>?, String?) -> Unit) {
+    fun fetchDataFromApi(callback: (List<RiverData>?, String?) -> Unit) {
         Log.d("dev start api", "start")
 
         val request = Request.Builder()
@@ -37,9 +42,12 @@ object ApiManager {
                     if (!responseData.isNullOrEmpty()) {
                         // 使用 Gson 解析 JSON 資料
                         val gson = Gson()
-                        val petOne = gson.fromJson(responseData, stockData.StockData::class.java)
-                        callback(null, responseData.toString())
-                        Log.d("dev 132", petOne.toString())
+                        val stockData = gson.fromJson(responseData, ApiResponse::class.java)
+
+                        callback(stockData.stockDataList.first().riverDataList, responseData.toString())
+                        Log.d("dev 132", stockData.stockDataList.first().riverDataList.toString())
+
+
                     } else {
                         // 處理回應為空的情況
                         callback(null, "API回應為空")
